@@ -10,6 +10,7 @@ import (
 func (s *service) VerifyRecoveryCode(ctx context.Context,code string) (string, error) {
     userDetail, err := s.repository.GetUser(ctx,"", "", 0, code)
     if err != nil {
+		log.Error().Err(err).Msg("Error get user from database")
         return "", err
     }
     // Generate JWT token
