@@ -16,6 +16,12 @@ Golang REST API With gin framework and database postgreSQL
   - [Verify response](#verify-response)
   - [Reset Password response](#reset-password-response)
   - [Login After Reset Password response](#login-after-reset-password-response)
+- [Logging Logrus ](#log-error)
+  - [Email Not Found ](#email-not-found)
+  - [Email Or Password Not Match ](#password-or-email-not-match)
+  - [Email Not Found ](#email-not-found)
+  - [Wrong Code Recovery ](#wrong-code-recovery)
+  - [Invalid Token ](#invalid-token)
 - [Database Schema](#database-schema)
 - [Credits](#credits)
 - [Copyright](#copyright)
@@ -262,6 +268,116 @@ will return:
 {
   "message": "success",
   "data": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzkzOTA3NTAsImlkIjoyMCwidXNlcm5hbWUiOiJ4cHJhc2V0aW8ifQ.Oy1BZQVptxqdU_Rcuotiko8eVUSVSr4CZ28ZfGajT6A"
+}
+```
+
+## Logging
+
+### Email Not Found
+
+```shell script
+curl --location 'localhost:9999/api/v1/memberships/login' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "email" : "xprasetio1@gmail.com",
+    "password" : "AfterResetPassword78910"
+}'
+```
+
+logrus will return:
+
+```json
+{
+  "error": "email not found",
+  "level": "error",
+  "msg": "failed to login: ",
+  "time": "2025-02-12T20:12:18Z"
+}
+```
+
+### password or email not match
+
+```shell script
+curl --location 'localhost:9999/api/v1/memberships/login' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "email" : "xprasetio@gmail.com",
+    "password" : "AfterResetPassword7891"
+}'
+```
+
+logrus will return:
+
+```json
+{
+  "error": "password or email not match",
+  "level": "error",
+  "msg": "failed to login: ",
+  "time": "2025-02-12T20:12:18Z"
+}
+```
+
+### email not found
+
+```shell script
+curl --location 'localhost:9999/api/v1/memberships/recovery' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "email" : "xprasetio1@gmail.com"
+}'
+```
+
+logrus will return:
+
+```json
+{
+  "error": "email not found",
+  "level": "error",
+  "msg": "failed to initiate recovery:",
+  "time": "2025-02-12T20:12:18Z"
+}
+```
+
+### wrong code recovery
+
+```shell script
+curl --location 'localhost:9999/api/v1/memberships/verify' \
+--header 'Content-Type: application/json' \
+--data '{
+    "recover_code" : "357e924d8568c1ca75f24bcc95fdc7dct"
+}'
+```
+
+logrus will return:
+
+```json
+{
+  "error": "record not found",
+  "level": "error",
+  "msg": "failed to verify recovery code: ",
+  "time": "2025-02-12T20:12:18Z"
+}
+```
+
+### invalid token
+
+```shell script
+curl --location 'localhost:9999/api/v1/memberships/reset-password' \
+--header 'Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzkzOTA1OTgsImlkIjoyMCwidXNlcm5hbWUiOiJ4cHJhc2V0aW8ifQ.jwadDIYKpYi_LS7PoIuCmAhB-3hDnZ48EZ31X04LkG41' \
+--header 'Content-Type: application/json' \
+--data '{
+    "password" : "AfterResetPassword78910"
+}'
+```
+
+logrus will return:
+
+```json
+{
+  "error": "signature is invalid",
+  "level": "error",
+  "msg": "failed to reset password: ",
+  "time": "2025-02-12T20:12:18Z"
 }
 ```
 
