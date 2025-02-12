@@ -1,0 +1,17 @@
+service:
+  port: ":9999"
+  SecretKey: "secret_key"
+
+database:
+  # dataSourceName: "postgres://admin:admin@localhost:5435/account_recovery?sslmode=disable"
+  dataSourceName: "host=host.docker.internal user=admin dbname=account_recovery port=5435 sslmode=disable password=admin" 
+
+emailConfig:
+  SMTPHost: "smtp.gmail.com"
+  SMTPPort: 587
+  SMTPUsername: "xprasetio@gmail.com"
+  SMTPPassword: "bxsvnxwcftabbkqn"
+  FromEmail: "xprasetio@gmail.com"
+  FromName: "PT Digital Security Indonesia"
+
+

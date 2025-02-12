@@ -1,0 +1,16 @@
+version: "3"
+services:
+  db:
+    image: postgres:latest
+    container_name: account-recovery
+    ports:
+      - "5435:5432"
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: account_recovery
+
+    volumes:
+      - /Users/abimana/2025/storage/account-recovery/db:/var/lib/postgresql/data #sesuaikan dengan lokasi yang akan kamu simpan dikomputer
+      
+
