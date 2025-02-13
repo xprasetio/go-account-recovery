@@ -7,7 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-//go:generate mockgen -source=handler.go -destination=handler_mock_test.go -package=memberships
+
 type service interface {
 	SignUp(ctx context.Context, request memberships.SignUpRequest) error
 	Login(ctx context.Context, request memberships.LoginRequest) (string, error)
