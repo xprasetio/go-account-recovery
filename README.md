@@ -133,6 +133,7 @@ docker build . -t yourdockerhub-account/go-account-recovery:latest
 │   │── jwt
 │       │── jwt.go
 ├── docker-compose.yml
+├── Dockerfile
 ├── go.mod
 ├── go.sum
 ├── Makefile
